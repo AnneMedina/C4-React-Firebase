@@ -19,6 +19,8 @@ export default function App() {
    *    `updatedAt` property to `Date.now()`.
    *
    * 2. TBA
+   *
+   * Screenshot of data stored in Firebase provided
    */
 
   React.useEffect(() => {
