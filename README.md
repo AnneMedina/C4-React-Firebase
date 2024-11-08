@@ -1,25 +1,22 @@
-# C4-React-Firebase
-React application accessing and storing data to Firebase
+# Getting Started
 
+Install the dependencies and run the project
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+```
+npm install
+npm start
+```
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyATod***BL2VZRM6WvL1GGTA",
-  authDomain: "reactfirebase-8c57b.firebaseapp.com",
-  projectId: "reactfirebase-8c57b",
-  storageBucket: "reactfirebase-8c57b.firebasestorage.app",
-  messagingSenderId: "848530---005",
-  appId: "1:848530666005:web:105b0a01b0f755c991141c",
-  measurementId: "G-E0JGK6SP8L"
-};
+Head over to https://vitejs.dev/ to learn more about configuring vite
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+## About Scrimba
+
+At Scrimba our goal is to create the best possible coding school at the cost of a gym membership! 💜
+If we succeed with this, it will give anyone who wants to become a software developer a realistic shot at succeeding, regardless of where they live and the size of their wallets 🎉
+The Frontend Developer Career Path aims to teach you everything you need to become a Junior Developer, or you could take a deep-dive with one of our advanced courses 🚀
+
+- [Our courses](https://scrimba.com/allcourses)
+- [The Frontend Career Path](https://scrimba.com/learn/frontend)
+- [Become a Scrimba Pro member](https://scrimba.com/pricing)
+
+Happy Coding!
