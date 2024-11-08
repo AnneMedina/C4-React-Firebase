@@ -43,6 +43,8 @@ export default function App() {
   async function createNewNote() {
     const newNote = {
       body: "# Type your markdown note's title here",
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
     };
     const newNoteRef = await addDoc(notesCollection, newNote);
     setCurrentNoteId(newNoteRef.id);
