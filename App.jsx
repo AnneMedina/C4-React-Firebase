@@ -2,6 +2,7 @@ import React from "react";
 import Sidebar from "./components/Sidebar";
 import Editor from "./components/Editor";
 import Split from "react-split";
+import { nanoid } from "nanoid";
 import { onSnapshot, addDoc, doc, deleteDoc, setDoc } from "firebase/firestore";
 import { notesCollection, db } from "./firebase";
 export default function App() {
@@ -13,14 +14,15 @@ export default function App() {
 
   /**
    * Challenge:
-   * 1. Add createdAt and updatedAt properties to the notes
+   * 1. ✅ Add createdAt and updatedAt properties to the notes
    *    When a note is first created, set the `createdAt` and `updatedAt`
    *    properties to `Date.now()`. Whenever a note is modified, set the
    *    `updatedAt` property to `Date.now()`.
    *
-   * 2. TBA
-   *
-   * Screenshot of data stored in Firebase provided
+   * 2. Create a new `sortedNotes` array (doesn't need to be saved
+   *    in state) that orders the items in the array from
+   *    most-recently-updated to least-recently-updated.
+   *    This may require a quick Google search.
    */
 
   React.useEffect(() => {
@@ -52,7 +54,11 @@ export default function App() {
 
   async function updateNote(text) {
     const docRef = doc(db, "notes", currentNoteId);
-    await setDoc(docRef, { body: text }, { merge: true });
+    await setDoc(
+      docRef,
+      { body: text, updatedAt: Date.now() },
+      { merge: true }
+    );
   }
 
   async function deleteNote(noteId) {
