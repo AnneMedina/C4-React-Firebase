@@ -25,6 +25,9 @@ export default function App() {
    *    This may require a quick Google search.
    */
 
+  const sortedNotes = notes.sort((a, b) => b.updatedAt - a.updatedAt);
+  // console.log(sortedNotes);
+
   React.useEffect(() => {
     const unsubscribe = onSnapshot(notesCollection, function (snapshot) {
       const notesArr = snapshot.docs.map((doc) => ({
