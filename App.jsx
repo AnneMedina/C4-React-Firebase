@@ -2,30 +2,28 @@ import React from "react";
 import Sidebar from "./components/Sidebar";
 import Editor from "./components/Editor";
 import Split from "react-split";
+import { nanoid } from "nanoid";
 import { onSnapshot, addDoc, doc, deleteDoc, setDoc } from "firebase/firestore";
 import { notesCollection, db } from "./firebase";
 export default function App() {
   const [notes, setNotes] = React.useState([]);
   const [currentNoteId, setCurrentNoteId] = React.useState("");
+  const [tempNoteText, setTempNoteText] = React.useState("");
+
+  /**
+   * Challenge:
+   * 3. Create a useEffect that, if there's a `currentNote`, sets
+   *    the `tempNoteText` to `currentNote.body`. (This copies the
+   *    current note's text into the `tempNoteText` field so whenever
+   *    the user changes the currentNote, the editor can display the
+   *    correct text.
+   * 4. TBA
+   */
 
   const currentNote =
     notes.find((note) => note.id === currentNoteId) || notes[0];
 
-  /**
-   * Challenge:
-   * 1. ✅ Add createdAt and updatedAt properties to the notes
-   *    When a note is first created, set the `createdAt` and `updatedAt`
-   *    properties to `Date.now()`. Whenever a note is modified, set the
-   *    `updatedAt` property to `Date.now()`.
-   *
-   * 2. Create a new `sortedNotes` array (doesn't need to be saved
-   *    in state) that orders the items in the array from
-   *    most-recently-updated to least-recently-updated.
-   *    This may require a quick Google search.
-   */
-
   const sortedNotes = notes.sort((a, b) => b.updatedAt - a.updatedAt);
-  // console.log(sortedNotes);
 
   React.useEffect(() => {
     const unsubscribe = onSnapshot(notesCollection, function (snapshot) {
@@ -43,6 +41,12 @@ export default function App() {
       setCurrentNoteId(notes[0]?.id);
     }
   }, [notes]);
+
+  React.useEffect(() => {
+    if (currentNote) {
+      setTempNoteText(currentNote.body);
+    }
+  }, [currentNote]);
 
   async function createNewNote() {
     const newNote = {
@@ -73,13 +77,16 @@ export default function App() {
       {notes.length > 0 ? (
         <Split sizes={[30, 70]} direction="horizontal" className="split">
           <Sidebar
-            notes={notes}
+            notes={sortedNotes}
             currentNote={currentNote}
             setCurrentNoteId={setCurrentNoteId}
             newNote={createNewNote}
             deleteNote={deleteNote}
           />
-          <Editor currentNote={currentNote} updateNote={updateNote} />
+          <Editor
+            tempNoteText={tempNoteText}
+            setTempNoteText={setTempNoteText}
+          />
         </Split>
       ) : (
         <div className="no-notes">
