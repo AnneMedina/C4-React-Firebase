@@ -5,20 +5,11 @@ import Split from "react-split";
 import { nanoid } from "nanoid";
 import { onSnapshot, addDoc, doc, deleteDoc, setDoc } from "firebase/firestore";
 import { notesCollection, db } from "./firebase";
+
 export default function App() {
   const [notes, setNotes] = React.useState([]);
   const [currentNoteId, setCurrentNoteId] = React.useState("");
   const [tempNoteText, setTempNoteText] = React.useState("");
-
-  /**
-   * Challenge:
-   * 3. Create a useEffect that, if there's a `currentNote`, sets
-   *    the `tempNoteText` to `currentNote.body`. (This copies the
-   *    current note's text into the `tempNoteText` field so whenever
-   *    the user changes the currentNote, the editor can display the
-   *    correct text.
-   * 4. TBA
-   */
 
   const currentNote =
     notes.find((note) => note.id === currentNoteId) || notes[0];
@@ -47,6 +38,15 @@ export default function App() {
       setTempNoteText(currentNote.body);
     }
   }, [currentNote]);
+
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (tempNoteText !== currentNote.body) {
+        updateNote(tempNoteText);
+      }
+    }, 500);
+    return () => clearTimeout(timeoutId);
+  }, [tempNoteText]);
 
   async function createNewNote() {
     const newNote = {
